@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block profile %}
+<div>
+{% for n in new %}
+	<a href="{% url 'userprofile' %}"><img src="{{ n.img.url }}" width="150" height="150" class="img-circle1"></a>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="channel-container">
+	<div class="divide">
+	<div class="left-row">
+	{% for p in new %}
+	<img src="{{ p.img.url }}" width="150" height="150" class="img-circle">
+	{% endfor %}
+	<div class="labelbar">
+	<label>{% if request.user.is_authenticated %}
+			{{request.user.first_name}} {{request.user.last_name}} 
+			{% endif %}
+	</label>
+	</div>
+	</div>
+	<div class="right-row">
+		<div class="linkbar">
+			
+		<a href="{% url 'createchannel' %}" class="btnUser">Create Channel</a>
+		</div>
+		<div class="linkbar">
+			
+		<a href="{% url 'upload'%}" class="btnUser">Upload Videos</a>
+	
+		</div>
+	</div>
+    </div>
+</div>
+<div class="space">
+	<label><u>My Channel</u></label>
+</div>
+<div class="channel-container">
+	<div class="divide">
+		{% for p in post %}
+		<div class="left-row">
+			<a href="{% url 'channel' cid=p.id %}">
+		<img src="{{ p.img.url }}" width="350" height="200">
+		</a>
+		</div>
+		<div class="right-row">
+			<div class="padd-top-chname">
+			<label><a href="{% url 'channel' cid=p.id %}" style="text-decoration: none; color: #111;">{{ p.name }}</a></label>
+			</div>
+			<div class="padd-top-tag">
+				<label><a href="{% url 'channel' cid=p.id %}" style="text-decoration: none; color: #111;">{{ p.tag_line }}</a></label>
+			</div>
+		</div>
+		
+		{% endfor %}
+	</div>
+	
+</div>
+
+{% endblock %}

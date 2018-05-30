@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block profile %}
+<div>
+{% for p in post %}
+<a href="{% url 'userprofile' %}"><img src="{{ p.img.url }}" width="150" height="150" class="img-circle1"></a>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div id="video_player_box">
+	<video id="my_video" width="100%" height="500" autoplay>
+		{% for f in form %}
+		<source src="{{ f.video.url }}" type="video/mp4">
+		{% endfor %}
+	</video>
+	<div id="video_controls_bar">
+		<div class="seek-bar">
+			<input type="range" id="seekslider" min="0" max="100" value="0" step="1" >
+		</div>
+		<table border="0">
+			<tr>
+				<td class="timer"><span id="curtimetext"></span>/<span id="durtimetext"></span></td>
+				<td class="playbtns"><img src="{% static 'img/prev.jpg'%}" width="25" height="25" class="playimg"></td>
+				<td class="playbtns"><img src="{% static 'img/resume.jpg' %}" id="playpause" class="playimg" width="25" height="25"></td>
+				<td class="playbtns"><img src="{% static 'img/next.jpg'%}" width="25" height="25" class="playimg"></td>
+				<td class="empty"></td>
+				<td class="speak"><img src="{% static 'img/speaker.jpg'%}" id="mutebtn" width="25" height="25" class="playimg">
+				<input type="range" id="volumes" min="0" max="100" value="50" step="1" width="60"></td>
+				<td class="empty"></td>
+				<td class="sharesetting"><img src="{% static 'img/share.jpg'%}" width="25" height="25" class="playimg"></td>
+				<td class="sharesetting"><img src="{% static 'img/setting.jpg'%}" width="25" height="25" class="playimg"></td>
+				<td class="sharesetting"><img id="fullbtn" src="{% static 'img/FullScreen.png' %}" width="25" height="25" class="playimg"></td>
+			</tr>
+		</table>	
+		
+	</div>
+	<script type="text/javascript">
+		var playurl="{% static 'img/play1.jpg' %}";
+		var resurl="{% static 'img/resume.jpg' %}";
+		var spkurl="{% static 'img/speaker.jpg' %}";
+		var muteurl="{% static 'img/mute.jpg' %}";
+	</script>
+</div>
+{% for f in form %}
+<div class="u-details">
+	<div class="channel-nav" style="padding-top: 10px;">
+		<div class="left-nav" style="padding-left: 20px;">
+			<label>{{f.title}}</label>
+		</div>
+		<div class="right-nav">
+			<label>{{ f.views }} Views</label>
+		</div>
+	</div>
+	<div class="channel-nav" style="padding-top: 10px;">
+		<div class="left-nav" style="padding-left: 20px;">
+			{% for g in gets %}
+			<div class="img-nav"><a href="#"><img src="{{ g.img.url }}" width="50" height="50"></a></div>
+			{% endfor %}
+			<div class="link-nav"><a href="#">{{ f.name }}</a></div>
+		</div>
+		<div class="right-nav">
+			<form method="post">
+				{% csrf_token %}
+						<button class="btnSub" name="Sub">Subscribe</button>
+						<button name="Like"><i class="fa fa-thumbs-down" style="font-size: 26px; padding-right: 20px; cursor: pointer;"></i></button>
+						<button name="dislike"><i class="fa fa-thumbs-up" style="font-size: 26px; padding-right: 20px; cursor: pointer;"></i></button>
+			</form>
+		</div>
+	</div>
+	<div class="description" style="padding-left: 20px;">
+		{{ f.description }}
+	</div>
+</div>
+{% endfor %}
+<div class="space">
+	<label>Best Views Video</label>
+</div>
+	{% for v in viewsv %}
+	<div class="img-container">
+	<div class="gallery">
+
+		<a href="{% url 'videos1' vid=v.id %}">
+			<img src="{{ v.img.url }}" alt="image1" width="300" height="200">
+		</a>
+		<div class="desc"><b>{{v.title}}</b></div>
+		<div class="pdesc">uploded by</div>
+		<div class="cdesc"><a href="{% url 'login' %}">{{ v.name }}</a></div>
+	</div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+	<div class="login">
+		<div class="frmContent">
+			<h2><u>Login Here</u></h2>
+			<form method="post">
+				{% csrf_token %}
+				{% if messages %}
+				<div class="messages">
+				    {% for message in messages %}
+				    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+				    {% endfor %}
+				</div>
+				{% endif %}
+				<input type="text" name="user" placeholder="User username/email id...">
+				<input type="password" name="pass1" placeholder="Password...">
+				<input type="submit" name="signup" value="Login" class="btnUser">
+				<br>
+				<a href="#" style="float:left;padding-left:50px; ">Forgot Password?</a>
+				
+				<a href="{% url 'register' %}" style="float: right;padding-right: 50px;">New User!!!</a>
+			</form>
+		</div>
+	</div>
+
+
+
+{% endblock %}

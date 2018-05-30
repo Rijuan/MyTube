@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block profile %}
+<div>
+{% for n in new %}
+	<a href="{% url 'userprofile' %}"><img src="{{ n.img.url }}" width="150" height="150" class="img-circle1"></a>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+	<label for="inputname">Name of the Channel</label>
+    <input type="text" id="inputname" class="form-control" placeholder="Name of the video" name="name" required autofocus>
+    <label for="inputTags">Tag Line</label>
+    <input type="text" id="inputTags" class="form-control" placeholder="Tags" name="tags" value="" required>
+    <label for="inputfile">Image</label>
+	<input type="file" id="inputfile" class="form-control" placeholder="File" name="file" value="">
+	<button class="btnUser">Save</button>
+	</form>
+</div>
+{% endblock %}

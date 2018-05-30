@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block profile %}
+<div>
+{% for n in new %}
+	<a href="{% url 'userprofile' %}"><img src="{{ n.img.url }}" width="150" height="150" class="img-circle1"></a>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div>
+	<form method="post" enctype="multipart/form-data">
+		
+	{% csrf_token %}
+	{% if messages %}
+				<div class="messages">
+				    {% for message in messages %}
+				    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+				    {% endfor %}
+				</div>
+				{% endif %}
+	{{ form.as_p }}
+	<button class="btnUser">Save</button>
+	</form>
+</div>
+{% endblock %}

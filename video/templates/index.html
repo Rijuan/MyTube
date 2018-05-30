@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block profile %}
+<div >
+{% for p in post %}
+	<a href="{% url 'userprofile'%}"><img src="{{ p.img.url }}" width="150" height="150" class="img-circle1"></a>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="space">
+	<label>Recent Videos</label>
+</div>
+{% for f in form %}
+<div class="img-container">
+	<div class="gallery">
+		{% if request.user.is_authenticated %}
+		<a href="{% url 'videos' vid=f.id %}">
+			{% else %}
+			<a href="{% url 'videos1' vid=f.id %}">
+				{% endif %}
+			<img src="{{ f.img.url }}" alt="image1" width="300" height="200">
+		</a>
+		<div class="desc"><b>{{ f.title }}</b></div>
+		<div class="pdesc">uploded by</div>
+		{% if request.user.is_authenticated %}
+		<div class="cdesc"><a href="{% url 'showChannel' name=f.name %}">{{ f.name }}</a></div>
+		{% else %}
+		<div class="cdesc"><a href="{% url 'login' %}">{{ f.name }}</a></div>
+		{% endif %}
+	</div>
+</div>
+{% endfor %}
+<div class="space">
+	<label><br></label>
+</div>
+<div class="space">
+	<label>Recommended Channels For You</label>
+</div>
+{% for l in lists%}
+<div class="video-container">
+	<div class="channel-nav">
+		<div class="left-nav">
+			<div class="img-nav"><a href="{% url 'showChannel' name=l.name%}"><img src="{{ l.img.url }}" width="50" height="50"></a></div>
+			<div class="link-nav"><a href="{% url 'showChannel' name=l.name %}">{{ l.name }}</a></div>
+		</div>
+		<div class="right-nav">
+			<a href="{% url 'showChannel' name=l.name %}" class="btnSub">Subscribe</a>
+		</div>
+	</div>
+</div>
+{% endfor %}
+<div class="space">
+	<label>Recommended Videos For You</label>
+</div>
+	{% for v in vid %}
+	<div class="img-container">
+	<div class="gallery">
+		{% if request.user.is_authenticated %}
+		<a href="{% url 'videos' vid=v.id %}">
+			<img src="{{ v.img.url }}" alt="image1" width="300" height="200">
+		</a>
+		{% else %}
+		<a href="{% url 'videos1' vid=v.id %}">
+			<img src="{{ v.img.url }}" alt="image1" width="300" height="200">
+		</a>
+		{% endif %}
+		<div class="desc"><b>{{ v.title }}</b></div>
+		<div class="pdesc">uploded by</div>
+		<div class="cdesc"><a href="{% url 'showChannel' name=v.name %}">{{ v.name }}</a></div>
+	</div>
+</div>
+
+{% endfor %}
+{% endblock %}

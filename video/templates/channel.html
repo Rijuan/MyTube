@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block profile %}
+<div>
+{% for p in post %}
+<a href="{% url 'userprofile' %}"><img src="{{ p.img.url }}" width="150" height="150" class="img-circle1"></a>
+{% endfor %}
+</div>
+{% endblock %}
+{% block content %}
+
+<div class="channel">
+	<div class="titleBox">
+		{% for t in title %}
+		<div class="left-box">
+			<a href="#">
+		<img src="{{ t.img.url }}" width="350" height="200">
+		</a>
+		</div>
+		<div class="right-box">
+			<div class="padd-top-chname">
+			<label><a href="#" style="text-decoration: none; color: #111;">{{ t.name }}</a></label>
+			</div>
+			<div class="padd-top-tag">
+				<label><a href="#" style="text-decoration: none; color: #111;">{{ t.tag_line }}</a></label>
+			</div>
+		</div>
+		
+		{% endfor %}
+	</div>
+
+	<div class="space">
+		<label><u>Videos</u></label>
+	</div>
+
+	<div class="videos">
+		{% for f in form %}
+		<div class="video-box">
+			<div class="video-gallery">
+				<a href="{% url 'videos' vid=f.id %}">
+					<img src="{{ f.img.url }}" alt="image1" width="240" height="200">
+				</a>
+			<div class="desc">{{ f.title}}</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	
+		<div class="space">
+			<label><u>Uapdate and delete url</u></label>
+		</div>
+</div>
+<br>
+<br>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block profile %}
+<div>
+{% for p in post %}
+<a href="{% url 'userprofile' %}"><img src="{{ p.img.url }}" width="150" height="150" class="img-circle1"></a>
+{% endfor %}
+</div>
+{% endblock %}
+{% block content %}
+<div class="space">
+		<label><u>Your Channel</u></label>
+</div>
+{% for f in form %}
+<div class="subscribe-container">
+	<div class="left-sub">
+		<div class="img-container">
+			<div class="gallery">
+				<a href="{% url 'channel' cid=f.id %}">
+					<img src="{{ f.img.url }}" alt="image1" width="300" height="200">
+				</a>
+				
+				<div class="pdesc">Channel Name</div>
+				<div class="cdesc"><a href="{% url 'channel' cid=f.id %}">{{ f.name }}</a></div>
+			</div>
+		</div>
+	</div>
+	<div class="right-sub">
+		<label>Total Subsriber Of Your Channel: {{ f.subscribe }}</label><br>
+		<label>Total Comments Of Your Channel: </label>
+	</div>
+</div>
+{% endfor %}
+<div class="space">
+		<label><u>Your Subscribe Channel</u></label>
+</div>
+
+<div>
+	{% for g in gets %}
+	<div class="img-container">
+			<div class="gallery">
+				<a href="{% url 'channel' cid=g.id %}">
+					<img src="{{ g.img.url }}" alt="image1" width="300" height="200">
+				</a>
+				
+				<div class="pdesc">Channel Name</div>
+				<div class="cdesc"><a href="{% url 'channel' cid=g.id %}">{{ g.name }}</a></div>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+{% endblock %}
